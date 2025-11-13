@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <section class="hero">
+        <h1>🎨 Pedidos Personalizados</h1>
+        <p>¿Tienes una idea única? ¡La creamos juntos!</p>
+    </section>
+    
+    <!-- MINI-QUIZ INTERACTIVO -->
+    <div style="text-align: center; margin: 3rem 0;">
+        <h2>🎯 ¿Qué tipo de creación buscas?</h2>
+        <p>Responde estas preguntas rápidas para darme una mejor idea de tu proyecto soñado</p>
+        
+        <!-- Paso 1: Categoría -->
+        <div id="quiz-step-1" class="quiz-step active">
+            <div class="grid">
+                <div class="card quiz-option" onclick="selectCategory('personaje')">
+                    <h3>👤 Personaje</h3>
+                    <p>De series, anime, películas o videojuegos</p>
+                    <small>Ej: Kirby, Finn y Jake, Pikachu</small>
+                </div>
+                
+                <div class="card quiz-option" onclick="selectCategory('animal')">
+                    <h3>🐾 Animal</h3>
+                    <p>Animales reales o fantásticos con personalidad</p>
+                    <small>Ej: Abejas, fresas, honguitos</small>
+                </div>
+                
+                <div class="card quiz-option" onclick="selectCategory('objeto')">
+                    <h3>🏠 Objeto Útil</h3>
+                    <p>Cosas funcionales para el día a día</p>
+                    <small>Ej: Posavasos, llaveros, organizadores</small>
+                </div>
+                
+                <div class="card quiz-option" onclick="selectCategory('original')">
+                    <h3>✨ Idea Original</h3>
+                    <p>Algo único que sale de tu imaginación</p>
+                    <small>¡Tu creatividad es el límite!</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Paso 2: Detalles específicos -->
+        <div id="quiz-step-2" class="quiz-step">
+            <h3 id="step2-title">Cuéntame más detalles</h3>
+            <p id="step2-desc">Entre más específico seas, más precisa será tu cotización</p>
+            
+            <div style="max-width: 600px; margin: 2rem auto;">
+                <textarea 
+                    id="idea-input" 
+                    placeholder="Escribe aquí todos los detalles de tu idea..." 
+                    style="width: 100%; height: 150px; padding: 1rem; border-radius: 15px; border: 2px solid var(--morado-medio); font-family: inherit; resize: vertical;"
+                ></textarea>
+                
+                <div style="margin: 1rem 0; text-align: left;">
+                    <label style="display: block; margin-bottom: 0.5rem;">
+                        <strong>📏 Tamaño aproximado:</strong>
+                    </label>
+                    <select id="size-select" style="padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                        <option value="">Selecciona un tamaño</option>
+                        <option value="pequeno">Pequeño (5-15 cm)</option>
+                        <option value="mediano">Mediano (15-30 cm)</option>
+                        <option value="grande">Grande (30+ cm)</option>
+                        <option value="no-se">No estoy seguro/a</option>
+                    </select>
+                </div>
+                
+                <div style="margin: 1rem 0; text-align: left;">
+                    <label style="display: block; margin-bottom: 0.5rem;">
+                        <strong>🎨 Colores principales:</strong>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="colors-input"
+                        placeholder="Ej: Rosa, azul, amarillo..."
+                        style="width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc;"
+                    >
+                </div>
+                
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button onclick="goBackToStep1()" class="quiz-btn" style="background: var(--gris-texto);">
+                        ← Volver
+                    </button>
+                    <button onclick="showContactOptions()" class="quiz-btn" style="background: var(--verde-fresco);">
+                        🚀 ¡Listo! Ver opciones de contacto
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Paso 3: Opciones de contacto personalizadas -->
+        <div id="quiz-step-3" class="quiz-step">
+            <div style="background: linear-gradient(135deg, var(--rosa-pastel), var(--morado-medio)); color: white; padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+                <h3>🎉 ¡Perfecto! Tu idea suena increíble</h3>
+                <p id="final-message">Estoy emocionada por crear esto contigo. Elige cómo prefieres contactarme:</p>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; margin: 1.5rem 0; flex-wrap: wrap;">
+                <a href="#" id="whatsapp-final" class="quiz-btn" style="background: #25D366; text-decoration: none;">
+                    📱 Enviar por WhatsApp
+                </a>
+                
+                <a href="#" id="email-final" class="quiz-btn" style="background: var(--morado-medio); text-decoration: none;">
+                    ✉️ Enviar por Email
+                </a>
+            </div>
+            
+            <button onclick="restartQuiz()" class="quiz-btn" style="background: var(--gris-texto);">
+                🔄 Hacer otra cotización
+            </button>
+        </div>
+    </div>
+    <!-- FIN DEL MINI-QUIZ -->
+
+    <!-- BOTONES DE CONTACTO DIRECTOS (como respaldo) -->
+    <div style="margin-top: 3rem; padding: 2rem; background: var(--gris-claro); border-radius: 15px; text-align: center;">
+        <h3>📞 ¿Prefieres contactarme directamente?</h3>
+        <p>También puedes escribirme sin pasar por el quiz</p>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
+            <!-- Botón de WhatsApp -->
+            <a href="https://wa.me/50236616786?text=¡Hola%20Daniela!%20Vi%20tu%20página%20web%20y%20me%20interesa%20un%20pedido%20personalizado%20de%20crochet%20🎨" 
+               target="_blank"
+               style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: bold; transition: transform 0.3s ease;">
+                📱 WhatsApp
+            </a>
+            
+            <!-- Botón de Instagram -->
+            <a href="https://www.instagram.com/crochetcondaniela?igsh=ang3NTVxa3NpbjN3" 
+               target="_blank"
+               style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(45deg, #405DE6, #E1306C, #F77737); color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: bold; transition: transform 0.3s ease;">
+                📸 Instagram
+            </a>
+            
+            <!-- Botón de TikTok -->
+            <a href="https://www.tiktok.com/@crochetcondaniela?_r=1&_t=ZM-91NFsBUHuci" 
+               target="_blank"
+               style="display: inline-flex; align-items: center; gap: 0.5rem; background: #000000; color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: bold; transition: transform 0.3s ease;">
+                🎵 TikTok
+            </a>
+            
+            <!-- Botón de Email -->
+            <a href="mailto:Genesisdaniela855@gmail.com?subject=Pedido%20Personalizado%20Crochet&body=¡Hola%20Daniela!%20Vi%20tu%20página%20web%20y%20me%20interesa%20solicitar%20un%20pedido%20personalizado.%20"
+               style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--morado-medio); color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: bold; transition: transform 0.3s ease;">
+                ✉️ Email
+            </a>
+        </div>
+    </div>
+    
+    <p style="margin-top: 2rem; text-align: center;"><a href="/">← Volver al inicio</a></p>
+</div>
+
+<script>
+let selectedCategory = '';
+let userIdea = '';
+
+const categoryDetails = {
+    'personaje': {
+        title: '👤 ¡Genial! Un personaje personalizado',
+        desc: 'Cuéntame sobre el personaje que tienes en mente:'
+    },
+    'animal': {
+        title: '🐾 ¡Qué lindo! Un animal o ser de naturaleza',
+        desc: 'Describe el animal o criatura que imaginas:'
+    },
+    'objeto': {
+        title: '🏠 ¡Perfecto! Un objeto útil y bonito',
+        desc: '¿Qué objeto funcional te gustaría?'
+    },
+    'original': {
+        title: '✨ ¡Wow! Una idea original y única',
+        desc: '¡Me encanta la creatividad! Describe tu idea:'
+    }
+};
+
+function selectCategory(category) {
+    selectedCategory = category;
+    
+    // Remover selección anterior
+    document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.style.border = 'none';
+    });
+    
+    // Resaltar selección actual
+    event.currentTarget.style.border = '3px solid var(--morado-medio)';
+    
+    // Avanzar al siguiente paso después de un momento
+    setTimeout(() => {
+        document.getElementById('quiz-step-1').classList.remove('active');
+        document.getElementById('quiz-step-2').classList.add('active');
+        
+        document.getElementById('step2-title').textContent = categoryDetails[category].title;
+        document.getElementById('step2-desc').textContent = categoryDetails[category].desc;
+    }, 500);
+}
+
+function goBackToStep1() {
+    document.getElementById('quiz-step-2').classList.remove('active');
+    document.getElementById('quiz-step-1').classList.add('active');
+    document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.style.border = 'none';
+    });
+}
+
+function showContactOptions() {
+    userIdea = document.getElementById('idea-input').value;
+    const size = document.getElementById('size-select').value;
+    const colors = document.getElementById('colors-input').value;
+    
+    if (!userIdea.trim()) {
+        alert('Por favor, describe tu idea antes de continuar 😊');
+        return;
+    }
+    
+    // Construir mensaje personalizado
+    let message = `¡Hola Daniela! Vi tu página web y me interesa un pedido personalizado:\n\n`;
+    message += `💡 **Mi idea:** ${userIdea}\n`;
+    message += `📏 **Tamaño:** ${document.getElementById('size-select').options[document.getElementById('size-select').selectedIndex].text}\n`;
+    if (colors.trim()) {
+        message += `🎨 **Colores:** ${colors}\n`;
+    }
+    message += `\n¿Podrías darme más información sobre tiempo y precio?`;
+    
+    // Actualizar enlaces
+    const whatsappLink = `https://wa.me/50236616786?text=${encodeURIComponent(message)}`;
+    const emailBody = `¡Hola Daniela!\n\n${message.replace(/\*\*(.*?)\*\*/g, '$1')}\n\nSaludos!`;
+    const emailLink = `mailto:Genesisdaniela855@gmail.com?subject=Cotización%20Pedido%20Personalizado&body=${encodeURIComponent(emailBody)}`;
+    
+    document.getElementById('whatsapp-final').href = whatsappLink;
+    document.getElementById('email-final').href = emailLink;
+    
+    // Mensaje final personalizado
+    const finalMsg = `Tu idea de ${categoryDetails[selectedCategory].title.toLowerCase()} suena maravillosa. ¡Hagámosla realidad!`;
+    document.getElementById('final-message').textContent = finalMsg;
+    
+    // Mostrar paso 3
+    document.getElementById('quiz-step-2').classList.remove('active');
+    document.getElementById('quiz-step-3').classList.add('active');
+}
+
+function restartQuiz() {
+    // Resetear todo
+    selectedCategory = '';
+    userIdea = '';
+    document.getElementById('idea-input').value = '';
+    document.getElementById('size-select').selectedIndex = 0;
+    document.getElementById('colors-input').value = '';
+    document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.style.border = 'none';
+    });
+    
+    // Volver al paso 1
+    document.getElementById('quiz-step-3').classList.remove('active');
+    document.getElementById('quiz-step-1').classList.add('active');
+}
+</script>
+
+<style>
+.quiz-step {
+    display: none;
+}
+
+.quiz-step.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.quiz-option {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quiz-option:hover {
+    transform: translateY(-5px);
+}
+
+.quiz-btn {
+    background: var(--morado-medio);
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    font-size: 1rem;
+}
+
+.quiz-btn:hover {
+    transform: translateY(-3px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Efectos hover para los botones de contacto */
+a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+</style>
+{% endblock %}

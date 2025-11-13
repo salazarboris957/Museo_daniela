@@ -1,13 +1,11 @@
 import os
 from pathlib import Path
-from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.pythonanywhere.com']
+SECRET_KEY = 'clave-secreta-museo-crochet-daniela-2024-temporal'
+DEBUG = True
+ALLOWED_HOSTS = ['boris132.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,10 +14,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'galeria',
-    'blog',
-    'personalizados',
-    'usuarios',
+    'galeria.apps.GaleriaConfig',
+    'blog.apps.BlogConfig',
+    'personalizados.apps.PersonalizadosConfig',
+    'usuarios.apps.UsuariosConfig',
 ]
 
 MIDDLEWARE = [

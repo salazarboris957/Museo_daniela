@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
@@ -7,6 +8,7 @@
         <p>Donde cada puntada cuenta una historia única</p>
     </section>
     
+    {% if obras_destacadas %}
     <section>
         <h2>Obras Destacadas</h2>
         <div class="grid">
@@ -14,13 +16,24 @@
             <div class="card">
                 <h3>{{ obra.nombre }}</h3>
                 <p>{{ obra.coleccion.nombre }} {{ obra.coleccion.icono }}</p>
-                <p><strong>${{ obra.precio }}</strong></p>
+                <p><strong>Q.{{ obra.precio }}</strong></p>
+                {% if obra.obrafoto_set.first %}
+                <img src="{{ obra.obrafoto_set.first.imagen.url }}" alt="{{ obra.nombre }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
+                {% endif %}
                 <a href="{% url 'obra_detalle' obra.id %}">Ver detalles</a>
             </div>
             {% endfor %}
         </div>
     </section>
+    {% else %}
+    <section style="text-align: center; margin-top: 3rem;">
+        <h2>🚧 Galería en construcción</h2>
+        <p>Próximamente verás aquí tus obras destacadas</p>
+        <p><a href="/admin/">Agregar obras desde el panel de administración</a></p>
+    </section>
+    {% endif %}
     
+    {% if colecciones %}
     <section>
         <h2>Colecciones</h2>
         <div class="grid">
@@ -33,5 +46,6 @@
             {% endfor %}
         </div>
     </section>
+    {% endif %}
 </div>
 {% endblock %}

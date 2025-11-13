@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <a href="/" style="text-decoration: none; color: var(--morado-medio); margin-bottom: 2rem; display: inline-block;">← Volver a la galería</a>
+    
+    <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <h1>{{ obra.nombre }}</h1>
+        <p style="color: var(--gris-texto); margin-bottom: 1rem;">
+            {{ obra.coleccion.icono }} {{ obra.coleccion.nombre }} • Q.{{ obra.precio }}
+        </p>
+        
+        {% if obra.obrafoto_set.all %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+            {% for foto in obra.obrafoto_set.all %}
+            <div>
+                <img src="{{ foto.imagen.url }}" alt="{{ foto.descripcion }}" 
+                     style="width: 100%; height: 250px; object-fit: cover; border-radius: 10px;">
+                <p style="text-align: center; margin-top: 0.5rem; color: var(--gris-texto);">
+                    {{ foto.descripcion }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div style="margin: 2rem 0;">
+            <h3>📖 La Historia</h3>
+            <p style="line-height: 1.6;">{{ obra.historia }}</p>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+            <h3>🎨 El Proceso</h3>
+            <p style="line-height: 1.6;">{{ obra.proceso }}</p>
+        </div>
+        
+        <div style="background: var(--gris-claro); padding: 1.5rem; border-radius: 10px; margin-top: 2rem;">
+            <h3>💫 ¿Te gustaría uno personalizado?</h3>
+            <p>Puedo crear una versión especial para ti</p>
+            <a href="/personalizados/" class="card" style="display: inline-block; margin-top: 1rem; text-decoration: none;">
+                Solicitar pedido personalizado →
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <section class="hero">
+        <h1>Bienvenida al Museo Crochet</h1>
+        <p>Donde cada puntada cuenta una historia única</p>
+    </section>
+    
+    <section>
+        <h2>Obras Destacadas</h2>
+        <div class="grid">
+            {% for obra in obras_destacadas %}
+            <div class="card">
+                <h3>{{ obra.nombre }}</h3>
+                <p>{{ obra.coleccion.nombre }} {{ obra.coleccion.icono }}</p>
+                <p><strong>${{ obra.precio }}</strong></p>
+                <a href="{% url 'obra_detalle' obra.id %}">Ver detalles</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    
+    <section>
+        <h2>Colecciones</h2>
+        <div class="grid">
+            {% for coleccion in colecciones %}
+            <div class="card" style="border-left: 4px solid {{ coleccion.color }};">
+                <h3>{{ coleccion.icono }} {{ coleccion.nombre }}</h3>
+                <p>{{ coleccion.descripcion }}</p>
+                <a href="{% url 'galeria_coleccion' coleccion.id %}">Explorar colección</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

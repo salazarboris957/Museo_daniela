@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Museo Crochet con Daniela{% endblock %}</title>
+    <style>
+        :root {
+            --rosa-pastel: #FFB6C1;
+            --morado-medio: #9370DB;
+            --blanco-museo: #FFFFFF;
+            --blanco-nieve: #FFF9FB;
+            --gris-claro: #F8F9FA;
+            --gris-texto: #5D5D5D;
+            --gris-oscuro: #333333;
+            --naranja-destello: #FF6B35;
+            --verde-fresco: #2E8B57;
+            --sombra-suave: rgba(147, 112, 219, 0.1);
+            --sombra-media: rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--blanco-nieve);
+            color: var(--gris-texto);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: var(--blanco-museo);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px var(--sombra-suave);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--morado-medio);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gris-texto);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--morado-medio);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--rosa-pastel) 0%, var(--morado-medio) 100%);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: var(--blanco-museo);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px var(--sombra-suave);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            background: var(--gris-oscuro);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">
+                🧶 Museo Crochet con Daniela
+            </a>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Inicio</a>
+                <a href="{% url 'blog_home' %}">Blog</a>
+                <a href="{% url 'personalizados_home' %}">Personalizados</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Museo Crochet con Daniela. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
